@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificado — {{ r.nombre }}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="encabezado">
+  <h1>Academia Horizonte</h1>
+  <p>{{ r.programa }} — Cohorte {{ r.cohorte }}</p>
+</header>
+<main class="diploma {{ r.clase }}">
+  <h2>{{ r.tipo }}</h2>
+  <p class="nombre">{{ r.nombre }}</p>
+  <p>Identificación: {{ r.id }}</p>
+  <p>Módulos: {{ r.modulos }} | Promedio: {{ "%.2f"|format(r.promedio) }} | Asistencia: {{ "%.2f"|format(r.asistencia) }}%</p>
+  <p><a href="/">← Volver a resultados</a></p>
+</main>
+</body>
+</html>

@@ -1,0 +1,24 @@
+/* Salón: azul marino y dorado. Solo diseño, sin lógica. */
+:root { --marino: #0a2a5a; --dorado: #c9a227; }
+body { font-family: Arial, sans-serif; margin: 0; background: #f6f4ec; color: #222; }
+.encabezado { background: var(--marino); color: white; border-bottom: 5px solid var(--dorado); padding: 20px; text-align: center; }
+.encabezado p { color: var(--dorado); margin: 5px 0 0; }
+.contadores { display: flex; gap: 12px; justify-content: center; padding: 16px; }
+.tarjeta { border-radius: 10px; padding: 12px 22px; text-align: center; color: white; min-width: 130px; }
+.tarjeta strong { display: block; font-size: 28px; }
+.tarjeta.verde { background: #1e7e34; }
+.tarjeta.azul { background: #1565c0; }
+.tarjeta.roja { background: #c62828; }
+.filtro { text-align: center; margin-bottom: 10px; }
+.filtro a { margin: 0 6px; padding: 6px 12px; border: 1px solid var(--marino); border-radius: 20px; text-decoration: none; color: var(--marino); }
+.filtro a.activo { background: var(--marino); color: var(--dorado); }
+main { max-width: 1000px; margin: 0 auto; padding: 0 16px 40px; }
+table { width: 100%; border-collapse: collapse; background: white; }
+th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+thead th { background: var(--marino); color: var(--dorado); }
+tr.aprobacion { background: #e6f4ea; }
+tr.participacion { background: #e8f0fe; }
+tr.sin { background: #fdecea; }
+.inconsistencias li { margin-bottom: 8px; }
+.diploma { background: white; border: 3px solid var(--dorado); border-radius: 12px; padding: 30px; text-align: center; margin-top: 20px; }
+.diploma .nombre { font-size: 26px; color: var(--marino); font-weight: bold; }

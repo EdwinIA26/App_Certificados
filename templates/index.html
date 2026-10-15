@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academia Horizonte — Certificados</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="encabezado">
+  <h1>Academia Horizonte</h1>
+  <p>Certificados por cohorte — proceso automático (antes manual en Excel/Word)</p>
+</header>
+
+<section class="contadores">
+  <div class="tarjeta verde"><strong>{{ contadores["Aprobación"] }}</strong><span>Aprobación</span></div>
+  <div class="tarjeta azul"><strong>{{ contadores["Participación"] }}</strong><span>Participación</span></div>
+  <div class="tarjeta roja"><strong>{{ contadores["Sin certificado"] }}</strong><span>Sin certificado</span></div>
+</section>
+
+<nav class="filtro">
+  <span>Filtrar por programa:</span>
+  <a href="/?programa=Todos" class="{% if programa_actual == 'Todos' %}activo{% endif %}">Todos</a>
+  {% for p in programas %}
+  <a href="/?programa={{ p }}" class="{% if programa_actual == p %}activo{% endif %}">{{ p }}</a>
+  {% endfor %}
+</nav>
+
+<main>
+<h2>Resultados ({{ resultados|length }})</h2>
+<table>
+  <thead>
+    <tr><th>Nombre</th><th>Programa</th><th>Módulos</th><th>Promedio</th><th>Asistencia</th><th>Certificado</th></tr>
+  </thead>
+  <tbody>
+    {% for r in resultados %}
+    <tr class="{{ r.clase }}">
+      <td><a href="/certificado/{{ r.id }}/{{ r.programa }}">{{ r.nombre }}</a></td>
+      <td>{{ r.programa }}</td>
+      <td>{{ r.modulos }}</td>
+      <td>{{ "%.2f"|format(r.promedio) }}</td>
+      <td>{{ "%.2f"|format(r.asistencia) }}</td>
+      <td>{{ r.tipo }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h2>Inconsistencias ({{ inconsistencias|length }})</h2>
+<ul class="inconsistencias">
+  {% for i in inconsistencias %}
+  <li><strong>{{ i.titulo }}:</strong> {{ i.detalle }}</li>
+  {% endfor %}
+</ul>
+</main>
+</body>
+</html>
