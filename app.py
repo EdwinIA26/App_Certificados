@@ -1,6 +1,7 @@
 # app.py — LA COCINA (toda la lógica vive aquí, NUNCA en el HTML)
 # Academia Horizonte: lee los Excel de Insumos/, cruza, calcula y decide.
 from pathlib import Path  # LADRILLO: rutas ancladas al propio archivo (tipo Path)
+from urllib.parse import unquote  # LADRILLO: decodificar %20 y %C3%A9 que llegan en la URL
 import hmac  # LADRILLO: comparar contraseñas sin filtrar tiempos
 import io  # LADRILLO: memoria temporal para Excel, ZIP y PDFs
 import os  # LADRILLO: leer variables de entorno (correos y contraseñas)
@@ -498,6 +499,9 @@ def generar_todos_los_pdf():
 # RUTAS WEB
 # ---------------------------------------------------------------
 def buscar_resultado(ident, programa):
+    # LADRILLO: en Vercel el programa puede llegar codificado (%20, %C3%A9).
+    # Lo decodificamos para compararlo con el texto limpio que viene del Excel.
+    programa = unquote(programa)
     # LADRILLO: busca un resultado por su llave Identificación + Programa.
     resultados, _, _, _ = cargar_datos()
     for r in resultados:  # tipo dict
