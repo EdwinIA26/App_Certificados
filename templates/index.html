@@ -8,6 +8,11 @@
 </head>
 <body>
 <header class="encabezado">
+  <div class="barra-sesion">
+    <span class="correo-sesion">{{ correo_sesion }}</span>
+    <span class="insignia {% if rol_sesion == 'admin' %}insignia-admin{% else %}insignia-usuario{% endif %}">{{ rol_sesion }}</span>
+    <a href="{{ url_for('salir') }}">Salir</a>
+  </div>
   <h1>Academia Horizonte</h1>
   <p>Certificados por cohorte — proceso automático (antes manual en Excel/Word)</p>
 </header>
@@ -18,6 +23,7 @@
   <div class="tarjeta roja"><strong>{{ contadores["Sin certificado"] }}</strong><span>Sin certificado</span></div>
 </section>
 
+{% if not datos_subidos %}
 <nav class="filtro">
   <span>Filtrar por programa:</span>
   <a href="/?programa=Todos" class="{% if programa_actual == 'Todos' %}activo{% endif %}">Todos</a>
@@ -25,8 +31,50 @@
   <a href="/?programa={{ p }}" class="{% if programa_actual == p %}activo{% endif %}">{{ p }}</a>
   {% endfor %}
 </nav>
+{% endif %}
 
 <main>
+{% if error %}
+<p class="error">{{ error }}</p>
+{% endif %}
+
+{% if datos_subidos %}
+<div class="aviso-subida">
+  <strong>Estos resultados son temporales.</strong>
+  Viven solo en esta pantalla y no se guardaron en el servidor. Si recargas la app,
+  volverás a los datos de fábrica, porque todavía no hay dónde guardarlos.
+</div>
+{% endif %}
+
+{% if rol_sesion == 'admin' %}
+<section class="panel-admin">
+  <h2>Panel de administrador</h2>
+  <p class="origen-datos"><strong>Origen de los datos en pantalla:</strong> {{ origen_datos }}</p>
+  <p class="ayuda-admin">Formatos aceptados: .xlsx. Máximo 4 MB por archivo (el envío completo no puede pasar de 4.5 MB).</p>
+
+  <form method="post" action="{{ url_for('cargar') }}" enctype="multipart/form-data">
+    <div class="campos-admin">
+      <div>
+        <label for="maestro">Maestro de estudiantes (.xlsx)</label>
+        <input type="file" id="maestro" name="maestro" accept=".xlsx" required>
+      </div>
+      <div>
+        <label for="evaluaciones">Registro de evaluaciones (.xlsx)</label>
+        <input type="file" id="evaluaciones" name="evaluaciones" accept=".xlsx" required>
+      </div>
+    </div>
+    <div class="botones-admin">
+      <button type="submit" name="accion" value="ver" class="principal">Procesar y ver en pantalla</button>
+      <button type="submit" name="accion" value="excel" class="secundario">Procesar y descargar Excel</button>
+    </div>
+  </form>
+
+  <p class="descarga-fabrica">
+    <a href="{{ url_for('resultados_fabrica') }}">Descargar los resultados de los datos de fábrica (.xlsx)</a>
+  </p>
+</section>
+{% endif %}
+
 <h2>Resultados ({{ resultados|length }})</h2>
 <table>
   <thead>
@@ -46,12 +94,15 @@
   </tbody>
 </table>
 
+{% if rol_sesion == 'admin' %}
 <h2>Inconsistencias ({{ inconsistencias|length }})</h2>
 <ul class="inconsistencias">
   {% for i in inconsistencias %}
   <li><strong>{{ i.titulo }}:</strong> {{ i.detalle }}</li>
   {% endfor %}
 </ul>
+<p><a class="enlace-admin" href="{{ url_for('inconsistencias') }}">Abrir esta sección en una página aparte →</a></p>
+{% endif %}
 </main>
 </body>
 </html>

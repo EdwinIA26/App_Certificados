@@ -22,3 +22,64 @@ tr.sin { background: #fdecea; }
 .inconsistencias li { margin-bottom: 8px; }
 .diploma { background: white; border: 3px solid var(--dorado); border-radius: 12px; padding: 30px; text-align: center; margin-top: 20px; }
 .diploma .nombre { font-size: 26px; color: var(--marino); font-weight: bold; }
+
+/* Barra de sesión dentro del encabezado */
+.encabezado { position: relative; }
+.barra-sesion { position: absolute; top: 12px; right: 18px; display: flex; align-items: center; gap: 10px; font-size: 13px; }
+.barra-sesion .correo-sesion { color: #e8e2c9; }
+.barra-sesion a { background: var(--dorado); color: var(--marino); padding: 5px 12px; border-radius: 16px; text-decoration: none; font-weight: bold; }
+.barra-sesion a:hover { background: #e0b93a; }
+@media (max-width: 640px) {
+  .barra-sesion { position: static; justify-content: center; margin-bottom: 10px; }
+}
+
+/* Pantalla de entrada */
+.login-pagina { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; background: radial-gradient(circle at 50% 0%, #123c7a 0%, var(--marino) 70%); }
+.login-caja { background: white; width: 100%; max-width: 400px; margin: 0; padding: 34px 30px 30px; border-radius: 14px; border-top: 6px solid var(--dorado); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35); box-sizing: border-box; text-align: center; }
+.login-caja h1 { margin: 0; color: var(--marino); font-size: 26px; }
+.login-subtitulo { color: #8a7a3a; margin: 4px 0 22px; font-size: 14px; }
+.login-caja label { display: block; text-align: left; margin: 14px 0 6px; font-weight: bold; color: var(--marino); font-size: 14px; }
+.login-caja input { width: 100%; padding: 11px 12px; border: 1px solid #c9c4b4; border-radius: 8px; font-size: 15px; box-sizing: border-box; }
+.login-caja input:focus { outline: none; border-color: var(--dorado); box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.2); }
+.login-caja button { width: 100%; margin-top: 22px; padding: 12px; background: var(--marino); color: var(--dorado); border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; }
+.login-caja button:hover { background: #123c7a; }
+.error { background: #fdecea; color: #c62828; border: 1px solid #f5c2bd; border-radius: 8px; padding: 10px; margin: 0 0 10px; font-size: 14px; }
+.aviso-demo { background: #fff8e1; border: 1px dashed var(--dorado); border-radius: 8px; padding: 10px 12px; margin-bottom: 16px; font-size: 12.5px; color: #5a4a10; text-align: left; }
+.aviso-demo p { margin: 4px 0; }
+.aviso-demo .demo-dato { font-family: Consolas, monospace; font-size: 12px; }
+
+/* Insignia del rol (admin en dorado, usuario en azul claro) */
+.insignia { display: inline-block; padding: 3px 9px; border-radius: 12px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.4px; }
+.insignia-admin { background: var(--dorado); color: var(--marino); }
+.insignia-usuario { background: #e8f0fe; color: var(--marino); border: 1px solid #9db8dd; }
+
+/* Página de acceso denegado (403) */
+.sin-permiso-texto { color: #555; font-size: 14px; line-height: 1.5; margin: 0 0 6px; }
+.sesion-actual { background: #f6f4ec; border: 1px solid #e2dcc6; border-radius: 8px; padding: 10px 12px; margin: 16px 0; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+.enlaces-permiso { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 4px; }
+.enlaces-permiso a { text-decoration: none; padding: 10px 16px; border-radius: 8px; font-weight: bold; font-size: 14px; }
+.enlaces-permiso a.principal { background: var(--marino); color: var(--dorado); }
+.enlaces-permiso a.principal:hover { background: #123c7a; }
+.enlaces-permiso a.secundario { background: #f6f4ec; color: var(--marino); border: 1px solid var(--marino); }
+.enlaces-permiso a.secundario:hover { background: #ece7d6; }
+.enlace-admin { color: #1565c0; font-weight: bold; text-decoration: none; }
+.enlace-admin:hover { text-decoration: underline; }
+
+/* Panel de administrador (carga de Excel) */
+.panel-admin { background: #fff; border: 1px solid #e2dcc6; border-left: 5px solid var(--dorado); border-radius: 10px; padding: 16px 18px; margin-bottom: 22px; }
+.panel-admin h2 { margin: 0 0 10px; color: var(--marino); font-size: 20px; }
+.origen-datos { background: #f6f4ec; border-radius: 6px; padding: 8px 10px; font-size: 13px; color: #444; margin: 0 0 12px; }
+.ayuda-admin { font-size: 12.5px; color: #666; margin: -4px 0 12px; }
+.campos-admin { display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 14px; }
+.campos-admin > div { flex: 1 1 260px; }
+.campos-admin label { display: block; font-weight: bold; color: var(--marino); font-size: 13px; margin-bottom: 5px; }
+.campos-admin input[type="file"] { font-size: 13px; max-width: 100%; }
+.botones-admin { display: flex; gap: 10px; flex-wrap: wrap; }
+.botones-admin button { padding: 10px 14px; border: none; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer; }
+.botones-admin button.principal { background: var(--marino); color: var(--dorado); }
+.botones-admin button.principal:hover { background: #123c7a; }
+.botones-admin button.secundario { background: var(--dorado); color: var(--marino); }
+.botones-admin button.secundario:hover { background: #e0b93a; }
+.descarga-fabrica { margin: 14px 0 0; font-size: 13px; }
+.descarga-fabrica a { color: #1565c0; font-weight: bold; }
+.aviso-subida { background: #e6f4ea; border: 1px solid #9fd3ae; color: #1e6b34; border-radius: 8px; padding: 12px 14px; margin-bottom: 16px; font-size: 14px; line-height: 1.45; }

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sin permiso — Academia Horizonte</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="login-pagina">
+<main class="login-caja">
+  <h1>Acceso restringido</h1>
+  <p class="login-subtitulo">Esta sección es solo para administradores</p>
+
+  {# LADRILLO: explicación amable para quien no tiene el rol "admin" #}
+  <p class="sin-permiso-texto">
+    Tu cuenta no tiene permisos para ver esta parte de la aplicación.
+    Si necesitas entrar, pide a la coordinación académica que revise tu rol.
+  </p>
+
+  {# LADRILLO: datos de la sesión actual (los entrega app.py, el HTML solo los muestra) #}
+  <div class="sesion-actual">
+    <span class="correo-sesion">{{ correo_sesion }}</span>
+    <span class="insignia {% if rol_sesion == 'admin' %}insignia-admin{% else %}insignia-usuario{% endif %}">{{ rol_sesion }}</span>
+  </div>
+
+  <nav class="enlaces-permiso">
+    <a class="principal" href="{{ url_for('index') }}">Volver al tablero</a>
+    <a class="secundario" href="{{ url_for('salir') }}">Salir</a>
+  </nav>
+</main>
+</body>
+</html>
