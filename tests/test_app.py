@@ -1,6 +1,7 @@
 import io
 import os
 from pathlib import Path
+from urllib.parse import quote
 
 import openpyxl
 import pytest
@@ -14,7 +15,7 @@ os.environ["USUARIO_CLAVE"] = "clave-usuario-prueba"
 os.environ["SECRET_KEY"] = "clave-secreta-solo-para-pruebas-123456789"
 
 # LADRILLO: se importa después de las variables de entorno a propósito.
-from app import app  # noqa: E402
+from app import app, cargar_datos  # noqa: E402
 
 # LADRILLO: rutas de los archivos de fábrica (solo se leen, nunca se modifican).
 BASE = Path(__file__).resolve().parent.parent
@@ -111,3 +112,18 @@ def test_excel_modificado_cambia_contadores(cliente):
     assert 'class="tarjeta verde"><strong>18</strong>' in texto, "Deben quedar 18 aprobaciones."
     assert 'class="tarjeta azul"><strong>4</strong>' in texto, "Deben quedar 4 participaciones."
     assert 'class="tarjeta roja"><strong>1</strong>' in texto, "Debe quedar 1 sin certificado."
+
+
+def test_certificado_pdf_se_descarga(cliente):
+    # Simula a una persona que abre un certificado y pulsa "Descargar certificado en PDF".
+    iniciar_sesion(cliente, "usuario@prueba.local", "clave-usuario-prueba")
+
+    resultados, _, _, _ = cargar_datos()
+    elegido = resultados[0]
+    url = "/certificado/" + elegido["id"] + "/" + quote(elegido["programa"]) + "/pdf"
+    respuesta = cliente.get(url)
+
+    assert respuesta.status_code == 200, "El PDF individual debe generarse."
+    assert respuesta.data[:4] == b"%PDF", "La respuesta debe ser un PDF real."
+    assert respuesta.mimetype == "application/pdf"
+    assert "attachment" in respuesta.headers.get("Content-Disposition", "")

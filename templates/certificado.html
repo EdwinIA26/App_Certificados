@@ -21,6 +21,9 @@
   <p class="nombre">{{ r.nombre }}</p>
   <p>Identificación: {{ r.id }}</p>
   <p>Módulos: {{ r.modulos }} | Promedio: {{ "%.2f"|format(r.promedio) }} | Asistencia: {{ "%.2f"|format(r.asistencia) }}%</p>
+  <p class="acciones-certificado">
+    <a class="boton-descarga" href="{{ url_for('certificado_pdf', ident=r.id, programa=r.programa) }}">Descargar certificado en PDF</a>
+  </p>
   <p><a href="/">← Volver a resultados</a></p>
 </main>
 </body>

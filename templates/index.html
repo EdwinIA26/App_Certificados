@@ -78,7 +78,7 @@
 <h2>Resultados ({{ resultados|length }})</h2>
 <table>
   <thead>
-    <tr><th>Nombre</th><th>Programa</th><th>Módulos</th><th>Promedio</th><th>Asistencia</th><th>Certificado</th></tr>
+    <tr><th>Nombre</th><th>Programa</th><th>Módulos</th><th>Promedio</th><th>Asistencia</th><th>Certificado</th><th>PDF</th></tr>
   </thead>
   <tbody>
     {% for r in resultados %}
@@ -89,6 +89,7 @@
       <td>{{ "%.2f"|format(r.promedio) }}</td>
       <td>{{ "%.2f"|format(r.asistencia) }}</td>
       <td>{{ r.tipo }}</td>
+      <td><a class="enlace-pdf" href="{{ url_for('certificado_pdf', ident=r.id, programa=r.programa) }}">Descargar</a></td>
     </tr>
     {% endfor %}
   </tbody>

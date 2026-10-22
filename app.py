@@ -497,6 +497,15 @@ def generar_todos_los_pdf():
 # ---------------------------------------------------------------
 # RUTAS WEB
 # ---------------------------------------------------------------
+def buscar_resultado(ident, programa):
+    # LADRILLO: busca un resultado por su llave Identificación + Programa.
+    resultados, _, _, _ = cargar_datos()
+    for r in resultados:  # tipo dict
+        if r["id"] == ident and r["programa"] == programa:
+            return r
+    return None
+
+
 def mostrar_tablero(resultados, contadores, programas, inconsistencias,
                     programa_actual="Todos", origen_datos=ORIGEN_FABRICA,
                     datos_subidos=False, error=None):
@@ -642,16 +651,27 @@ def inconsistencias():
     return render_template("inconsistencias.html", inconsistencias=lista)
 
 
+@app.route("/certificado/<ident>/<path:programa>/pdf")
+@requiere_login
+def certificado_pdf(ident, programa):
+    # LADRILLO: busca al estudiante y arma SU PDF en memoria, sin escribir en disco.
+    elegido = buscar_resultado(ident, programa)
+    if elegido is None:
+        return "Certificado no encontrado", 404
+    contenido = construir_certificado_pdf(elegido)  # tipo bytes
+    # LADRILLO: io.BytesIO permite enviar esos bytes como si fueran un archivo.
+    return send_file(
+        io.BytesIO(contenido),
+        mimetype="application/pdf",
+        as_attachment=True,
+        download_name=nombre_archivo(elegido),
+    )
+
+
 @app.route("/certificado/<ident>/<path:programa>")
 @requiere_login
 def certificado(ident, programa):
-    resultados, _, _, _ = cargar_datos()
-    # LADRILLO: bucle + condicional para buscar un certificado
-    elegido = None
-    for r in resultados:
-        if r["id"] == ident and r["programa"] == programa:
-            elegido = r
-            break
+    elegido = buscar_resultado(ident, programa)
     if elegido is None:
         return "Certificado no encontrado", 404
     return render_template("certificado.html", r=elegido)
