@@ -114,16 +114,15 @@ def test_excel_modificado_cambia_contadores(cliente):
     assert 'class="tarjeta roja"><strong>1</strong>' in texto, "Debe quedar 1 sin certificado."
 
 
-def test_certificado_pdf_se_muestra_en_pantalla(cliente):
+def test_certificado_ver_se_muestra_en_pantalla(cliente):
     # Simula a una persona que abre un certificado y pulsa "Ver certificado en PDF".
     iniciar_sesion(cliente, "usuario@prueba.local", "clave-usuario-prueba")
 
     resultados, _, _, _ = cargar_datos()
     elegido = resultados[0]
-    url = "/certificado/" + elegido["id"] + "/" + quote(elegido["programa"]) + "/pdf"
+    url = "/certificado/" + elegido["id"] + "/" + quote(elegido["programa"]) + "/ver"
     respuesta = cliente.get(url)
 
-    assert respuesta.status_code == 200, "El PDF individual debe generarse."
-    assert respuesta.data[:4] == b"%PDF", "La respuesta debe ser un PDF real."
-    assert respuesta.mimetype == "application/pdf"
-    assert "inline" in respuesta.headers.get("Content-Disposition", ""), "El PDF debe abrirse en pantalla, no descargarse."
+    assert respuesta.status_code == 200, "La pantalla de vista previa debe cargarse."
+    texto = respuesta.get_data(as_text=True)
+    assert "pdfContainer" in texto, "Debe contener el visor de PDF ajustado a la página."

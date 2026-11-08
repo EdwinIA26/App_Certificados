@@ -674,6 +674,21 @@ def certificado_pdf(ident, programa):
     )
 
 
+# LADRILLO: pantalla que abre el PDF ya ajustado al tamaño de la ventana.
+@app.route("/certificado/<ident>/<path:programa>/ver")
+@requiere_login
+def certificado_ver(ident, programa):
+    elegido = buscar_resultado(ident, programa)
+    if elegido is None:
+        return "Certificado no encontrado", 404
+    # URL absoluta del PDF para que PDF.js pueda cargarla desde el mismo servidor.
+    url_pdf = url_for("certificado_pdf", ident=elegido["id"], programa=elegido["programa"], _external=True)
+    return render_template("ver_pdf.html",
+                           url_pdf=url_pdf,
+                           programa=elegido["programa"],
+                           cohorte=elegido["cohorte"])
+
+
 @app.route("/certificado/<ident>/<path:programa>")
 @requiere_login
 def certificado(ident, programa):

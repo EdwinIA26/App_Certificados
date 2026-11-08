@@ -22,7 +22,7 @@
   <p>Identificación: {{ r.id }}</p>
   <p>Módulos: {{ r.modulos }} | Promedio: {{ "%.2f"|format(r.promedio) }} | Asistencia: {{ "%.2f"|format(r.asistencia) }}%</p>
   <p class="acciones-certificado">
-    <a class="boton-descarga" href="{{ url_for('certificado_pdf', ident=r.id, programa=r.programa) }}" target="_blank" rel="noopener">Ver certificado en PDF</a>
+    <a class="boton-descarga" href="{{ url_for('certificado_ver', ident=r.id, programa=r.programa) }}" target="_blank" rel="noopener">Ver certificado en PDF</a>
   </p>
   <p><a href="/">← Volver a resultados</a></p>
 </main>

@@ -89,7 +89,7 @@
       <td>{{ "%.2f"|format(r.promedio) }}</td>
       <td>{{ "%.2f"|format(r.asistencia) }}</td>
       <td>{{ r.tipo }}</td>
-      <td><a class="enlace-pdf" href="{{ url_for('certificado_pdf', ident=r.id, programa=r.programa) }}" target="_blank" rel="noopener">Ver</a></td>
+      <td><a class="enlace-pdf" href="{{ url_for('certificado_ver', ident=r.id, programa=r.programa) }}" target="_blank" rel="noopener">Ver</a></td>
     </tr>
     {% endfor %}
   </tbody>
