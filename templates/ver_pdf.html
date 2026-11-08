@@ -16,6 +16,8 @@
 <header class="encabezado">
   <div class="barra-sesion">
     <span>{{ correo_sesion }} · {{ rol_sesion }}</span>
+    <a class="boton-descarga" href="{{ url_pdf }}" target="_blank" rel="noopener">Descargar PDF</a>
+    <a class="boton-volver" href="{{ url_for('index') }}">← Volver</a>
     <a href="{{ url_for('salir') }}">Salir</a>
   </div>
   <h1>Academia Horizonte</h1>

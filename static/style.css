@@ -37,6 +37,13 @@ tr.sin { background: #fdecea; }
   .barra-sesion { position: static; justify-content: center; margin-bottom: 10px; }
 }
 
+/* Botones dentro de la barra de sesión (vista previa) */
+.boton-descarga, .boton-volver { padding: 5px 12px; border-radius: 16px; text-decoration: none; font-weight: bold; font-size: 13px; }
+.boton-descarga { background: white; color: var(--marino); }
+.boton-descarga:hover { background: #f6f4ec; }
+.boton-volver { background: var(--dorado); color: var(--marino); }
+.boton-volver:hover { background: #e0b93a; }
+
 /* Pantalla de entrada */
 .login-pagina { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; background: radial-gradient(circle at 50% 0%, #123c7a 0%, var(--marino) 70%); }
 .login-caja { background: white; width: 100%; max-width: 400px; margin: 0; padding: 34px 30px 30px; border-radius: 14px; border-top: 6px solid var(--dorado); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35); box-sizing: border-box; text-align: center; }

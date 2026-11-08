@@ -665,11 +665,11 @@ def certificado_pdf(ident, programa):
         return "Certificado no encontrado", 404
     contenido = construir_certificado_pdf(elegido)  # tipo bytes
     # LADRILLO: io.BytesIO permite enviar esos bytes como si fueran un archivo.
-    # as_attachment=False = el navegador lo muestra en pantalla; desde ahí se puede guardar.
+    # as_attachment=True = el navegador descarga el archivo en lugar de mostrarlo.
     return send_file(
         io.BytesIO(contenido),
         mimetype="application/pdf",
-        as_attachment=False,
+        as_attachment=True,
         download_name=nombre_archivo(elegido),
     )
 
