@@ -114,8 +114,8 @@ def test_excel_modificado_cambia_contadores(cliente):
     assert 'class="tarjeta roja"><strong>1</strong>' in texto, "Debe quedar 1 sin certificado."
 
 
-def test_certificado_pdf_se_descarga(cliente):
-    # Simula a una persona que abre un certificado y pulsa "Descargar certificado en PDF".
+def test_certificado_pdf_se_muestra_en_pantalla(cliente):
+    # Simula a una persona que abre un certificado y pulsa "Ver certificado en PDF".
     iniciar_sesion(cliente, "usuario@prueba.local", "clave-usuario-prueba")
 
     resultados, _, _, _ = cargar_datos()
@@ -126,4 +126,4 @@ def test_certificado_pdf_se_descarga(cliente):
     assert respuesta.status_code == 200, "El PDF individual debe generarse."
     assert respuesta.data[:4] == b"%PDF", "La respuesta debe ser un PDF real."
     assert respuesta.mimetype == "application/pdf"
-    assert "attachment" in respuesta.headers.get("Content-Disposition", "")
+    assert "inline" in respuesta.headers.get("Content-Disposition", ""), "El PDF debe abrirse en pantalla, no descargarse."

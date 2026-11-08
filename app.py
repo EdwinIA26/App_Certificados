@@ -353,6 +353,8 @@ def construir_certificado_pdf(r):
     pdf = FPDF(orientation="L", unit="mm", format="A4")
     pdf.set_auto_page_break(False)
     pdf.set_margins(0, 0, 0)
+    # LADRILLO: al abrir el PDF, el visor lo ajusta a toda la página (/Fit).
+    pdf.set_display_mode(zoom="fullpage", layout="single")
     pdf.add_page()
 
     # Fondo blanco y doble borde (marino por fuera, dorado por dentro)
@@ -464,7 +466,6 @@ def construir_certificado_pdf(r):
     pdf.set_line_width(0.5)
     pdf.line(55, 180, 125, 180)
     pdf.line(172, 180, 242, 180)
-    texto_centrado(pdf, 182, "Coordinación Académica", "Helvetica", "", 9, COLOR_GRIS, ancho=70)
     pdf.set_xy(55, 182)
     pdf.cell(70, 5, "Coordinación Académica", align="C")
     pdf.set_xy(172, 182)
@@ -664,10 +665,11 @@ def certificado_pdf(ident, programa):
         return "Certificado no encontrado", 404
     contenido = construir_certificado_pdf(elegido)  # tipo bytes
     # LADRILLO: io.BytesIO permite enviar esos bytes como si fueran un archivo.
+    # as_attachment=False = el navegador lo muestra en pantalla; desde ahí se puede guardar.
     return send_file(
         io.BytesIO(contenido),
         mimetype="application/pdf",
-        as_attachment=True,
+        as_attachment=False,
         download_name=nombre_archivo(elegido),
     )
 
